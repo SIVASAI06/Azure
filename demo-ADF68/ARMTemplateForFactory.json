@@ -118,7 +118,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[Updateproducts]"
+							"storedProcedureName": "[[dbo].[Updateproducts1]"
 						},
 						"linkedServiceName": {
 							"referenceName": "ADBProducts",
