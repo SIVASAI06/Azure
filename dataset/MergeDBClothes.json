@@ -1,0 +1,16 @@
+{
+	"name": "MergeDBClothes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWImportersDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Clothes"
+		}
+	}
+}

@@ -1,8 +1,8 @@
 {
-	"name": "ProductsLTTable",
+	"name": "ProductsFullTable",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ADBProducts",
+			"referenceName": "AdvWorksFullDB",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -22,8 +22,26 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "MakeFlag",
+				"type": "bit"
+			},
+			{
+				"name": "FinishedGoodsFlag",
+				"type": "bit"
+			},
+			{
 				"name": "Color",
 				"type": "nvarchar"
+			},
+			{
+				"name": "SafetyStockLevel",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "ReorderPoint",
+				"type": "smallint",
+				"precision": 5
 			},
 			{
 				"name": "StandardCost",
@@ -42,13 +60,38 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "SizeUnitMeasureCode",
+				"type": "nchar"
+			},
+			{
+				"name": "WeightUnitMeasureCode",
+				"type": "nchar"
+			},
+			{
 				"name": "Weight",
 				"type": "decimal",
 				"precision": 8,
 				"scale": 2
 			},
 			{
-				"name": "ProductCategoryID",
+				"name": "DaysToManufacture",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductLine",
+				"type": "nchar"
+			},
+			{
+				"name": "Class",
+				"type": "nchar"
+			},
+			{
+				"name": "Style",
+				"type": "nchar"
+			},
+			{
+				"name": "ProductSubcategoryID",
 				"type": "int",
 				"precision": 10
 			},
@@ -76,14 +119,6 @@
 				"scale": 3
 			},
 			{
-				"name": "ThumbNailPhoto",
-				"type": "varbinary"
-			},
-			{
-				"name": "ThumbnailPhotoFileName",
-				"type": "nvarchar"
-			},
-			{
 				"name": "rowguid",
 				"type": "uniqueidentifier"
 			},
@@ -95,7 +130,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "SalesLT",
+			"schema": "Production",
 			"table": "Product"
 		}
 	}

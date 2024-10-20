@@ -49,7 +49,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ProductTable",
+						"referenceName": "ProductsLTTable",
 						"type": "DatasetReference"
 					}
 				],

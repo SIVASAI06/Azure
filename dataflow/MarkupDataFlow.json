@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ProductTable",
+						"referenceName": "ProductsLTTable",
 						"type": "DatasetReference"
 					},
 					"name": "Productstablestream"
