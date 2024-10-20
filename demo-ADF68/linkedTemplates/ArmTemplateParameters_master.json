@@ -8,7 +8,16 @@
 		"ADBProducts_password": {
 			"value": ""
 		},
+		"AdvWorksFullDB_password": {
+			"value": ""
+		},
+		"MergedDatabase_password": {
+			"value": ""
+		},
 		"StorAproducts_connectionString": {
+			"value": ""
+		},
+		"WWImportersDB_password": {
 			"value": ""
 		},
 		"ADBProducts_properties_typeProperties_server": {
@@ -18,6 +27,33 @@
 			"value": "AdvWorksDB"
 		},
 		"ADBProducts_properties_typeProperties_userName": {
+			"value": "sivasai"
+		},
+		"AdvWorksFullDB_properties_typeProperties_server": {
+			"value": "demosqlsrver.database.windows.net"
+		},
+		"AdvWorksFullDB_properties_typeProperties_database": {
+			"value": "AdvWorks2022"
+		},
+		"AdvWorksFullDB_properties_typeProperties_userName": {
+			"value": "sivasai"
+		},
+		"MergedDatabase_properties_typeProperties_server": {
+			"value": "demosqlsrver.database.windows.net"
+		},
+		"MergedDatabase_properties_typeProperties_database": {
+			"value": "MergeDB"
+		},
+		"MergedDatabase_properties_typeProperties_userName": {
+			"value": "sivasai"
+		},
+		"WWImportersDB_properties_typeProperties_server": {
+			"value": "demosqlsrver.database.windows.net"
+		},
+		"WWImportersDB_properties_typeProperties_database": {
+			"value": "WideWorldImporters"
+		},
+		"WWImportersDB_properties_typeProperties_userName": {
 			"value": "sivasai"
 		},
 		"containerUri": {

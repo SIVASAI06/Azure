@@ -11,9 +11,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ADBProducts'"
 		},
+		"AdvWorksFullDB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AdvWorksFullDB'"
+		},
+		"MergedDatabase_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'MergedDatabase'"
+		},
 		"StorAproducts_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'StorAproducts'"
+		},
+		"WWImportersDB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'WWImportersDB'"
 		},
 		"ADBProducts_properties_typeProperties_server": {
 			"type": "string",
@@ -24,6 +36,42 @@
 			"defaultValue": "AdvWorksDB"
 		},
 		"ADBProducts_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		},
+		"AdvWorksFullDB_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "demosqlsrver.database.windows.net"
+		},
+		"AdvWorksFullDB_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdvWorks2022"
+		},
+		"AdvWorksFullDB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		},
+		"MergedDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "demosqlsrver.database.windows.net"
+		},
+		"MergedDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "MergeDB"
+		},
+		"MergedDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		},
+		"WWImportersDB_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "demosqlsrver.database.windows.net"
+		},
+		"WWImportersDB_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "WideWorldImporters"
+		},
+		"WWImportersDB_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sivasai"
 		}
@@ -85,7 +133,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "ProductTable",
+								"referenceName": "ProductsLTTable",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -132,7 +180,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ProductTable')]",
+				"[concat(variables('factoryId'), '/datasets/ProductsLTTable')]",
 				"[concat(variables('factoryId'), '/datasets/ProductsLTJson')]",
 				"[concat(variables('factoryId'), '/linkedServices/ADBProducts')]"
 			]
@@ -184,7 +232,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ProductTable')]",
+			"name": "[concat(parameters('factoryName'), '/ProductsLTTable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -336,6 +384,50 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AdvWorksFullDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AdvWorksFullDB_properties_typeProperties_server')]",
+					"database": "[parameters('AdvWorksFullDB_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AdvWorksFullDB_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AdvWorksFullDB_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MergedDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('MergedDatabase_properties_typeProperties_server')]",
+					"database": "[parameters('MergedDatabase_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('MergedDatabase_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('MergedDatabase_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/StorAproducts')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -344,6 +436,28 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('StorAproducts_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WWImportersDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('WWImportersDB_properties_typeProperties_server')]",
+					"database": "[parameters('WWImportersDB_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('WWImportersDB_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('WWImportersDB_password')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -358,7 +472,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ProductTable",
+								"referenceName": "ProductsLTTable",
 								"type": "DatasetReference"
 							},
 							"name": "Productstablestream"
@@ -435,9 +549,516 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ProductTable')]",
+				"[concat(variables('factoryId'), '/datasets/ProductsLTTable')]",
 				"[concat(variables('factoryId'), '/datasets/ProductsLTJson')]",
 				"[concat(variables('factoryId'), '/linkedServices/StorAproducts')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MergeDBPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "MergeDBDataFlow",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "MergeDBDataFlow",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AdvWorksFullDBSource": {},
+									"WWImportersFullDBSource": {},
+									"MergeDBProducts": {},
+									"MergeDBClothesSink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/MergeDBDataFlow')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MergeDBDataFlow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ProductsFullTable",
+								"type": "DatasetReference"
+							},
+							"name": "AdvWorksFullDBSource"
+						},
+						{
+							"dataset": {
+								"referenceName": "StockItemsTable",
+								"type": "DatasetReference"
+							},
+							"name": "WWImportersFullDBSource"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "MergeDBProducts",
+								"type": "DatasetReference"
+							},
+							"name": "MergeDBProducts"
+						},
+						{
+							"dataset": {
+								"referenceName": "MergeDBClothes",
+								"type": "DatasetReference"
+							},
+							"name": "MergeDBClothesSink"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          ProductID as integer,",
+						"          Name as string,",
+						"          ProductNumber as string,",
+						"          MakeFlag as boolean,",
+						"          FinishedGoodsFlag as boolean,",
+						"          Color as string,",
+						"          SafetyStockLevel as integer,",
+						"          ReorderPoint as integer,",
+						"          StandardCost as decimal(19,4),",
+						"          ListPrice as decimal(19,4),",
+						"          Size as string,",
+						"          SizeUnitMeasureCode as string,",
+						"          WeightUnitMeasureCode as string,",
+						"          Weight as decimal(8,2),",
+						"          DaysToManufacture as integer,",
+						"          ProductLine as string,",
+						"          Class as string,",
+						"          Style as string,",
+						"          ProductSubcategoryID as integer,",
+						"          ProductModelID as integer,",
+						"          SellStartDate as timestamp,",
+						"          SellEndDate as timestamp,",
+						"          DiscontinuedDate as timestamp,",
+						"          rowguid as string,",
+						"          ModifiedDate as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> AdvWorksFullDBSource",
+						"source(output(",
+						"          StockItemID as integer,",
+						"          StockItemName as string,",
+						"          SupplierID as integer,",
+						"          ColorID as integer,",
+						"          UnitPackageID as integer,",
+						"          OuterPackageID as integer,",
+						"          Brand as string,",
+						"          Size as string,",
+						"          LeadTimeDays as integer,",
+						"          QuantityPerOuter as integer,",
+						"          IsChillerStock as boolean,",
+						"          Barcode as string,",
+						"          TaxRate as decimal(18,3),",
+						"          UnitPrice as decimal(18,2),",
+						"          RecommendedRetailPrice as decimal(18,2),",
+						"          TypicalWeightPerUnit as decimal(18,3),",
+						"          MarketingComments as string,",
+						"          InternalComments as string,",
+						"          Photo as binary,",
+						"          CustomFields as string,",
+						"          Tags as string,",
+						"          SearchDetails as string,",
+						"          LastEditedBy as integer,",
+						"          ValidFrom as timestamp,",
+						"          ValidTo as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> WWImportersFullDBSource",
+						"AdvWorksFullDBSource sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> MergeDBProducts",
+						"WWImportersFullDBSource sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> MergeDBClothesSink"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ProductsFullTable')]",
+				"[concat(variables('factoryId'), '/datasets/StockItemsTable')]",
+				"[concat(variables('factoryId'), '/datasets/MergeDBProducts')]",
+				"[concat(variables('factoryId'), '/datasets/MergeDBClothes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StockItemsTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "WWImportersDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "StockItemID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "StockItemName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupplierID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ColorID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "UnitPackageID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OuterPackageID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Brand",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Size",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LeadTimeDays",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QuantityPerOuter",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "IsChillerStock",
+						"type": "bit"
+					},
+					{
+						"name": "Barcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TaxRate",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "UnitPrice",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "RecommendedRetailPrice",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "TypicalWeightPerUnit",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "MarketingComments",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InternalComments",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Photo",
+						"type": "varbinary"
+					},
+					{
+						"name": "CustomFields",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tags",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SearchDetails",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastEditedBy",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ValidFrom",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "ValidTo",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "Warehouse",
+					"table": "StockItems"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/WWImportersDB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProductsFullTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AdvWorksFullDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProductNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MakeFlag",
+						"type": "bit"
+					},
+					{
+						"name": "FinishedGoodsFlag",
+						"type": "bit"
+					},
+					{
+						"name": "Color",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SafetyStockLevel",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ReorderPoint",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "StandardCost",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "ListPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Size",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SizeUnitMeasureCode",
+						"type": "nchar"
+					},
+					{
+						"name": "WeightUnitMeasureCode",
+						"type": "nchar"
+					},
+					{
+						"name": "Weight",
+						"type": "decimal",
+						"precision": 8,
+						"scale": 2
+					},
+					{
+						"name": "DaysToManufacture",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductLine",
+						"type": "nchar"
+					},
+					{
+						"name": "Class",
+						"type": "nchar"
+					},
+					{
+						"name": "Style",
+						"type": "nchar"
+					},
+					{
+						"name": "ProductSubcategoryID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductModelID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SellStartDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "SellEndDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DiscontinuedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "Production",
+					"table": "Product"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AdvWorksFullDB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MergeDBProducts')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "MergedDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Products"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/MergedDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MergeDBClothes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "WWImportersDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Clothes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/WWImportersDB')]"
 			]
 		}
 	]
