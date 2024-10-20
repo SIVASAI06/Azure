@@ -874,6 +874,15 @@
 					"transformations": [
 						{
 							"name": "StockItemSort"
+						},
+						{
+							"name": "FilterDiscontinued"
+						},
+						{
+							"name": "DerivedCostAndItemType"
+						},
+						{
+							"name": "DerivedProductType"
 						}
 					],
 					"scriptLines": [
@@ -941,7 +950,11 @@
 						"     format: 'table') ~> WWImportersDBSource",
 						"WWImportersDBSource sort(asc(StockItemName, true),",
 						"     caseInsensitive: true) ~> StockItemSort",
-						"AdvWorksFullDBSource sink(allowSchemaDrift: true,",
+						"AdvWorksFullDBSource filter(isNull(SellEndDate)) ~> FilterDiscontinued",
+						"StockItemSort derive(Cost = UnitPrice*(1+(TaxRate/100)),",
+						"          ItemType = case(in(['S', 'M','L','3XS', '3XL', '4XL', '5XL',' 6XL','7XL','XS','XXS', 'XL', 'XXL'],Size),'Clothing','Product')) ~> DerivedCostAndItemType",
+						"FilterDiscontinued derive(ItemType = case(in(['S','M','L','XL'],Size), 'Clothing', 'Product')) ~> DerivedProductType",
+						"DerivedProductType sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -952,7 +965,7 @@
 						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> MergeDBProducts",
-						"StockItemSort sink(allowSchemaDrift: true,",
+						"DerivedCostAndItemType sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
