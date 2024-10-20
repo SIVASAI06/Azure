@@ -16,7 +16,7 @@
 						"referenceName": "StockItemsTable",
 						"type": "DatasetReference"
 					},
-					"name": "WWImportersFullDBSource"
+					"name": "WWImportersDBSource"
 				}
 			],
 			"sinks": [
@@ -35,7 +35,11 @@
 					"name": "MergeDBClothesSink"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "StockItemSort"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          ProductID as integer,",
@@ -98,7 +102,9 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> WWImportersFullDBSource",
+				"     format: 'table') ~> WWImportersDBSource",
+				"WWImportersDBSource sort(asc(StockItemName, true),",
+				"     caseInsensitive: true) ~> StockItemSort",
 				"AdvWorksFullDBSource sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -110,7 +116,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> MergeDBProducts",
-				"WWImportersFullDBSource sink(allowSchemaDrift: true,",
+				"StockItemSort sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
