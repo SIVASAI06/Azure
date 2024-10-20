@@ -59,6 +59,33 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "UpdateProductsSP",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "tabletojsoncopy",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[Updateproducts]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ADBProducts",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
