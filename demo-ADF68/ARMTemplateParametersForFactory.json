@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "demo-ADF68"
+		},
+		"ADBProducts_password": {
+			"value": ""
+		},
+		"StorAproducts_connectionString": {
+			"value": ""
+		},
+		"ADBProducts_properties_typeProperties_server": {
+			"value": "demosqlsrver.database.windows.net"
+		},
+		"ADBProducts_properties_typeProperties_database": {
+			"value": "AdvWorksDB"
+		},
+		"ADBProducts_properties_typeProperties_userName": {
+			"value": "sivasai"
+		}
+	}
+}
