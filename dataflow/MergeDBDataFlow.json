@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "WWImportersDBSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "StockItemsTable",
+						"type": "DatasetReference"
+					},
+					"name": "WWImportersColorSource"
 				}
 			],
 			"sinks": [
@@ -118,6 +125,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> WWImportersDBSource",
+				"source(output(",
+				"          ColorID as integer,",
+				"          ColorName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'select ColorID, ColorName from Warehouse.Colors',",
+				"     format: 'query') ~> WWImportersColorSource",
 				"WWImportersDBSource sort(asc(StockItemName, true),",
 				"     caseInsensitive: true) ~> StockItemSort",
 				"AdvWorksFullDBSource filter(isNull(SellEndDate)) ~> FilterDiscontinued",
