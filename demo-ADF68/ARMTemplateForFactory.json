@@ -258,6 +258,7 @@
 									"AdvWorksFullDBSource": {},
 									"WWImportersDBSource": {},
 									"WWImportersColorSource": {},
+									"AdvWorksCheckModel": {},
 									"MergeDBProducts": {},
 									"MergeDBClothesSink": {}
 								}
@@ -955,6 +956,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "WWImportersColorSource"
+						},
+						{
+							"dataset": {
+								"referenceName": "ProductsFullTable",
+								"type": "DatasetReference"
+							},
+							"name": "AdvWorksCheckModel"
 						}
 					],
 					"sinks": [
@@ -1009,6 +1017,9 @@
 						},
 						{
 							"name": "UnionAllProducts"
+						},
+						{
+							"name": "ProductJoinModel"
 						}
 					],
 					"scriptLines": [
@@ -1083,13 +1094,22 @@
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     query: 'select ColorID, ColorName from Warehouse.Colors',",
 						"     format: 'query') ~> WWImportersColorSource",
+						"source(output(",
+						"          ProductModelID as integer,",
+						"          ProductModelName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'Select ProductModelID, Name as ProductModelName from Production.ProductModel',",
+						"     format: 'query') ~> AdvWorksCheckModel",
 						"WWImportersDBSource sort(asc(StockItemName, true),",
 						"     caseInsensitive: true) ~> StockItemSort",
 						"AdvWorksFullDBSource filter(isNull(SellEndDate)) ~> FilterDiscontinued",
 						"StockItemSort derive(Cost = UnitPrice*(1+(TaxRate/100)),",
 						"          ItemType = case(in(['S', 'M','L','3XS', '3XL', '4XL', '5XL',' 6XL','7XL','XS','XXS', 'XL', 'XXL'],Size),'Clothing','Product')) ~> DerivedCostAndItemType",
 						"SelectAdvWorksColumns derive(ItemType = case(in(['S','M','L','XL'],Size), 'Clothing', 'Product')) ~> DerivedProductType",
-						"FilterDiscontinued select(mapColumn(",
+						"ProductJoinModel select(mapColumn(",
 						"          Name,",
 						"          Color,",
 						"          Cost = StandardCost,",
@@ -1121,7 +1141,12 @@
 						"     broadcast: 'auto')~> CheckRepeatedClothes",
 						"CheckRepeatedClothes, WWImportesSplitClothesFromProducts@WWImportesClothes union(byName: true)~> UnionAllClothes",
 						"WWImportesSplitClothesFromProducts@WWImportesProducts, AdvWorksSplitClothesfromProducts@AdvWorksProducts union(byName: true)~> UnionAllProducts",
-						"AdvWorksSplitClothesfromProducts@AdvWorksProducts sink(allowSchemaDrift: true,",
+						"FilterDiscontinued, AdvWorksCheckModel join(AdvWorksFullDBSource@ProductModelID == AdvWorksCheckModel@ProductModelID,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> ProductJoinModel",
+						"UnionAllProducts sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -1132,7 +1157,7 @@
 						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> MergeDBProducts",
-						"UnionAllProducts sink(allowSchemaDrift: true,",
+						"UnionAllClothes sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
