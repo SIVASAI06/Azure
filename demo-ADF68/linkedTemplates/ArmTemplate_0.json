@@ -896,6 +896,24 @@
 						},
 						{
 							"name": "SelectWWImportersColumns"
+						},
+						{
+							"name": "ColorNameLookup"
+						},
+						{
+							"name": "AdvWorksSplitClothesfromProducts"
+						},
+						{
+							"name": "WWImportesSplitClothesFromProducts"
+						},
+						{
+							"name": "CheckRepeatedClothes"
+						},
+						{
+							"name": "UnionAllClothes"
+						},
+						{
+							"name": "UnionAllProducts"
 						}
 					],
 					"scriptLines": [
@@ -980,21 +998,35 @@
 						"          Name,",
 						"          Color,",
 						"          Cost = StandardCost,",
-						"          RetialPrice = ListPrice,",
+						"          RetailPrice = ListPrice,",
 						"          Size",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> SelectAdvWorksColumns",
-						"DerivedCostAndItemType select(mapColumn(",
+						"ColorNameLookup select(mapColumn(",
 						"          Name = StockItemName,",
 						"          Cost,",
 						"          RetailPrice = RecommendedRetailPrice,",
 						"          Size,",
-						"          ItemType",
+						"          ItemType,",
+						"          Color = ColorName",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> SelectWWImportersColumns",
-						"DerivedProductType sink(allowSchemaDrift: true,",
+						"DerivedCostAndItemType, WWImportersColorSource lookup(WWImportersDBSource@ColorID == WWImportersColorSource@ColorID,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> ColorNameLookup",
+						"DerivedProductType split(ItemType == \"Product\",",
+						"     disjoint: false) ~> AdvWorksSplitClothesfromProducts@(AdvWorksProducts, AdvClothes)",
+						"SelectWWImportersColumns split(ItemType == \"Product\",",
+						"     disjoint: false) ~> WWImportesSplitClothesFromProducts@(WWImportesProducts, WWImportesClothes)",
+						"AdvWorksSplitClothesfromProducts@AdvClothes, WWImportesSplitClothesFromProducts@WWImportesClothes exists(AdvWorksSplitClothesfromProducts@AdvClothes@Name == WWImportesSplitClothesFromProducts@WWImportesClothes@Name,",
+						"     negate:true,",
+						"     broadcast: 'auto')~> CheckRepeatedClothes",
+						"CheckRepeatedClothes, WWImportesSplitClothesFromProducts@WWImportesClothes union(byName: true)~> UnionAllClothes",
+						"WWImportesSplitClothesFromProducts@WWImportesProducts, AdvWorksSplitClothesfromProducts@AdvWorksProducts union(byName: true)~> UnionAllProducts",
+						"AdvWorksSplitClothesfromProducts@AdvWorksProducts sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -1005,7 +1037,7 @@
 						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> MergeDBProducts",
-						"SelectWWImportersColumns sink(allowSchemaDrift: true,",
+						"UnionAllProducts sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
