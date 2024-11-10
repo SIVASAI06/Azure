@@ -1,0 +1,502 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "demo-adf0601"
+		},
+		"ADBProducts_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ADBProducts'"
+		},
+		"AdvWorksDBLT_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AdvWorksDBLT'"
+		},
+		"AdvWorksFullDB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AdvWorksFullDB'"
+		},
+		"AdvWorksLTDb_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AdvWorksLTDb'"
+		},
+		"BlobStorProducts_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BlobStorProducts'"
+		},
+		"Blobstor_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Blobstor'"
+		},
+		"MergedDatabase_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'MergedDatabase'"
+		},
+		"StorAproducts_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'StorAproducts'"
+		},
+		"WWImportersDB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'WWImportersDB'"
+		},
+		"ADBProducts_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "demosqlsrver.database.windows.net"
+		},
+		"ADBProducts_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdvWorksDB"
+		},
+		"ADBProducts_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		},
+		"AdvWorksDBLT_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "testsrvr12.database.windows.net"
+		},
+		"AdvWorksDBLT_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdvWorksdbLT"
+		},
+		"AdvWorksDBLT_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		},
+		"AdvWorksFullDB_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "demosqlsrver.database.windows.net"
+		},
+		"AdvWorksFullDB_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdvWorks2022"
+		},
+		"AdvWorksFullDB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		},
+		"AdvWorksLTDb_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "testsrvr12.database.windows.net"
+		},
+		"AdvWorksLTDb_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdvWorksdbLT"
+		},
+		"AdvWorksLTDb_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		},
+		"MergedDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "demosqlsrver.database.windows.net"
+		},
+		"MergedDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "MergeDB"
+		},
+		"MergedDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		},
+		"WWImportersDB_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "demosqlsrver.database.windows.net"
+		},
+		"WWImportersDB_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "WideWorldImporters"
+		},
+		"WWImportersDB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sivasai"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ADBProducts')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ADBProducts_properties_typeProperties_server')]",
+					"database": "[parameters('ADBProducts_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ADBProducts_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ADBProducts_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdvWorksDBLT')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AdvWorksDBLT_properties_typeProperties_server')]",
+					"database": "[parameters('AdvWorksDBLT_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AdvWorksDBLT_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AdvWorksDBLT_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdvWorksFullDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AdvWorksFullDB_properties_typeProperties_server')]",
+					"database": "[parameters('AdvWorksFullDB_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AdvWorksFullDB_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AdvWorksFullDB_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdvWorksLTDb')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AdvWorksLTDb_properties_typeProperties_server')]",
+					"database": "[parameters('AdvWorksLTDb_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AdvWorksLTDb_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AdvWorksLTDb_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BlobStorProducts')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('BlobStorProducts_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Blobstor')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('Blobstor_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MergedDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('MergedDatabase_properties_typeProperties_server')]",
+					"database": "[parameters('MergedDatabase_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('MergedDatabase_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('MergedDatabase_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StorAproducts')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('StorAproducts_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WWImportersDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('WWImportersDB_properties_typeProperties_server')]",
+					"database": "[parameters('WWImportersDB_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('WWImportersDB_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('WWImportersDB_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProductsJsonLT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Blobstor",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "products"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Blobstor')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProductsTableLT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AdvWorksDBLT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProductNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Color",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StandardCost",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "ListPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Size",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Weight",
+						"type": "decimal",
+						"precision": 8,
+						"scale": 2
+					},
+					{
+						"name": "ProductCategoryID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductModelID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SellStartDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "SellEndDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DiscontinuedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ThumbNailPhoto",
+						"type": "varbinary"
+					},
+					{
+						"name": "ThumbnailPhotoFileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "Product"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AdvWorksDBLT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy Products PL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Wait",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
+					},
+					{
+						"name": "Copy Products",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Wait",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ProductsTableLT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ProductsJsonLT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ProductsTableLT')]",
+				"[concat(variables('factoryId'), '/datasets/ProductsJsonLT')]"
+			]
+		}
+	]
+}
