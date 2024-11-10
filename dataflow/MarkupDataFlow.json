@@ -5,19 +5,11 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "ProductsLTTable",
-						"type": "DatasetReference"
-					},
 					"name": "Productstablestream"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "ProductsLTJson",
-						"type": "DatasetReference"
-					},
 					"name": "BlobJson",
 					"rejectedDataLinkedService": {
 						"referenceName": "StorAproducts",
@@ -51,9 +43,7 @@
 				"          ModifiedDate as timestamp",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> Productstablestream",
+				"     validateSchema: false) ~> Productstablestream",
 				"Productstablestream derive(Markup = ListPrice/StandardCost,",
 				"     partitionBy('hash', 1)) ~> Markupcolumn",
 				"Markupcolumn sink(allowSchemaDrift: true,",
