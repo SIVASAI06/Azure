@@ -486,6 +486,33 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "UpdateDateSP",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy Products",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[Updateproducts]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AdvWorksDBLT",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -495,7 +522,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ProductsTableLT')]",
-				"[concat(variables('factoryId'), '/datasets/ProductsJsonLT')]"
+				"[concat(variables('factoryId'), '/datasets/ProductsJsonLT')]",
+				"[concat(variables('factoryId'), '/linkedServices/AdvWorksDBLT')]"
 			]
 		},
 		{
