@@ -7,53 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "demo-adf0601"
 		},
-		"ADBProducts_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'ADBProducts'"
-		},
 		"AdvWorksDBLT_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AdvWorksDBLT'"
 		},
-		"AdvWorksFullDB_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AdvWorksFullDB'"
-		},
-		"AdvWorksLTDb_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AdvWorksLTDb'"
-		},
-		"BlobStorProducts_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'BlobStorProducts'"
-		},
 		"Blobstor_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Blobstor'"
-		},
-		"MergedDatabase_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'MergedDatabase'"
-		},
-		"StorAproducts_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'StorAproducts'"
-		},
-		"WWImportersDB_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'WWImportersDB'"
-		},
-		"ADBProducts_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "demosqlsrver.database.windows.net"
-		},
-		"ADBProducts_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "AdvWorksDB"
-		},
-		"ADBProducts_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sivasai"
 		},
 		"AdvWorksDBLT_properties_typeProperties_server": {
 			"type": "string",
@@ -64,54 +24,6 @@
 			"defaultValue": "AdvWorksdbLT"
 		},
 		"AdvWorksDBLT_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sivasai"
-		},
-		"AdvWorksFullDB_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "demosqlsrver.database.windows.net"
-		},
-		"AdvWorksFullDB_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "AdvWorks2022"
-		},
-		"AdvWorksFullDB_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sivasai"
-		},
-		"AdvWorksLTDb_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "testsrvr12.database.windows.net"
-		},
-		"AdvWorksLTDb_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "AdvWorksdbLT"
-		},
-		"AdvWorksLTDb_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sivasai"
-		},
-		"MergedDatabase_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "demosqlsrver.database.windows.net"
-		},
-		"MergedDatabase_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "MergeDB"
-		},
-		"MergedDatabase_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sivasai"
-		},
-		"WWImportersDB_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "demosqlsrver.database.windows.net"
-		},
-		"WWImportersDB_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "WideWorldImporters"
-		},
-		"WWImportersDB_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sivasai"
 		},
@@ -142,41 +54,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"ADBProducts_password": {
-						"value": "[parameters('ADBProducts_password')]"
-					},
 					"AdvWorksDBLT_password": {
 						"value": "[parameters('AdvWorksDBLT_password')]"
 					},
-					"AdvWorksFullDB_password": {
-						"value": "[parameters('AdvWorksFullDB_password')]"
-					},
-					"AdvWorksLTDb_password": {
-						"value": "[parameters('AdvWorksLTDb_password')]"
-					},
-					"BlobStorProducts_connectionString": {
-						"value": "[parameters('BlobStorProducts_connectionString')]"
-					},
 					"Blobstor_connectionString": {
 						"value": "[parameters('Blobstor_connectionString')]"
-					},
-					"MergedDatabase_password": {
-						"value": "[parameters('MergedDatabase_password')]"
-					},
-					"StorAproducts_connectionString": {
-						"value": "[parameters('StorAproducts_connectionString')]"
-					},
-					"WWImportersDB_password": {
-						"value": "[parameters('WWImportersDB_password')]"
-					},
-					"ADBProducts_properties_typeProperties_server": {
-						"value": "[parameters('ADBProducts_properties_typeProperties_server')]"
-					},
-					"ADBProducts_properties_typeProperties_database": {
-						"value": "[parameters('ADBProducts_properties_typeProperties_database')]"
-					},
-					"ADBProducts_properties_typeProperties_userName": {
-						"value": "[parameters('ADBProducts_properties_typeProperties_userName')]"
 					},
 					"AdvWorksDBLT_properties_typeProperties_server": {
 						"value": "[parameters('AdvWorksDBLT_properties_typeProperties_server')]"
@@ -186,42 +68,6 @@
 					},
 					"AdvWorksDBLT_properties_typeProperties_userName": {
 						"value": "[parameters('AdvWorksDBLT_properties_typeProperties_userName')]"
-					},
-					"AdvWorksFullDB_properties_typeProperties_server": {
-						"value": "[parameters('AdvWorksFullDB_properties_typeProperties_server')]"
-					},
-					"AdvWorksFullDB_properties_typeProperties_database": {
-						"value": "[parameters('AdvWorksFullDB_properties_typeProperties_database')]"
-					},
-					"AdvWorksFullDB_properties_typeProperties_userName": {
-						"value": "[parameters('AdvWorksFullDB_properties_typeProperties_userName')]"
-					},
-					"AdvWorksLTDb_properties_typeProperties_server": {
-						"value": "[parameters('AdvWorksLTDb_properties_typeProperties_server')]"
-					},
-					"AdvWorksLTDb_properties_typeProperties_database": {
-						"value": "[parameters('AdvWorksLTDb_properties_typeProperties_database')]"
-					},
-					"AdvWorksLTDb_properties_typeProperties_userName": {
-						"value": "[parameters('AdvWorksLTDb_properties_typeProperties_userName')]"
-					},
-					"MergedDatabase_properties_typeProperties_server": {
-						"value": "[parameters('MergedDatabase_properties_typeProperties_server')]"
-					},
-					"MergedDatabase_properties_typeProperties_database": {
-						"value": "[parameters('MergedDatabase_properties_typeProperties_database')]"
-					},
-					"MergedDatabase_properties_typeProperties_userName": {
-						"value": "[parameters('MergedDatabase_properties_typeProperties_userName')]"
-					},
-					"WWImportersDB_properties_typeProperties_server": {
-						"value": "[parameters('WWImportersDB_properties_typeProperties_server')]"
-					},
-					"WWImportersDB_properties_typeProperties_database": {
-						"value": "[parameters('WWImportersDB_properties_typeProperties_database')]"
-					},
-					"WWImportersDB_properties_typeProperties_userName": {
-						"value": "[parameters('WWImportersDB_properties_typeProperties_userName')]"
 					}
 				}
 			},
